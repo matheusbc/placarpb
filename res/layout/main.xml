@@ -3,11 +3,19 @@
               android:orientation="vertical"
               android:layout_width="fill_parent"
               android:layout_height="fill_parent"
-        >
+              android:id="@+id/layout">
     <TextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="Hello World, MainActivity"
             />
+    <ImageView
+            android:layout_width="40dip"
+            android:layout_height="40dip"
+            android:id="@+id/team1"/>
+    <ImageView
+            android:layout_width="40dip"
+            android:layout_height="40dip"
+            android:id="@+id/team2"/>
 </LinearLayout>
 
