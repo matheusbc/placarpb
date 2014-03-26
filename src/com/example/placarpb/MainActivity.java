@@ -32,7 +32,6 @@ public class MainActivity extends Activity {
 
         new Downloader(null, team1, null, this).execute("http://www.futebolinterior.com" +
                 ".br/imagens/clubes/escudos_25/121.png");
-        
         new Team(124, "Teste", "124.png").loadShield(team2, this);
     }
 }
