@@ -30,11 +30,8 @@ public class MainActivity extends Activity {
         layout.addView(team1);
         final ImageView team2 = (ImageView) findViewById(R.id.team2);
 
-//        new Downloader(null, team1, null, this).execute("http://www.futebolinterior.com" +
-//                ".br/imagens/clubes/escudos_25/121.png");
-//        new Downloader(null, team2, null, this).execute("http://www.futebolinterior.com" +
-//                ".br/imagens/clubes/escudos_25/122.png");
-        new Team(123, "Teste", "123.png").loadShield(team1, this);
+        new Downloader(null, team1, null, this).execute("http://www.futebolinterior.com" +
+                ".br/imagens/clubes/escudos_25/121.png");
         new Team(124, "Teste", "124.png").loadShield(team2, this);
     }
 }
