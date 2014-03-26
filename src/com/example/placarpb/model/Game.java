@@ -9,14 +9,14 @@ public class Game {
     private final int mVisitingTeamGoals;
     private final String mTime;
 
-    public Game(int id, String status, Team homeTeam, Team visitingTeam, int mHomeTeamGoals,
-                int mVisitingTeamGoals, String time) {
+    public Game(int id, String status, Team homeTeam, Team visitingTeam, int homeTeamGoals,
+                int visitingTeamGoals, String time) {
         this.mId = id;
         this.mStatus = status;
         this.mHomeTeam = homeTeam;
         this.mVisitingTeam = visitingTeam;
-        this.mHomeTeamGoals = mHomeTeamGoals;
-        this.mVisitingTeamGoals = mVisitingTeamGoals;
+        this.mHomeTeamGoals = homeTeamGoals;
+        this.mVisitingTeamGoals = visitingTeamGoals;
         this.mTime = time;
     }
 
@@ -40,11 +40,11 @@ public class Game {
         return mTime;
     }
 
-    public int getmHomeTeamGoals() {
+    public int getHomeTeamGoals() {
         return mHomeTeamGoals;
     }
 
-    public int getmVisitingTeamGoals() {
+    public int getVisitingTeamGoals() {
         return mVisitingTeamGoals;
     }
 
