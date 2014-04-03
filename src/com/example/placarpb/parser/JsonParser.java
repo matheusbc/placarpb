@@ -15,12 +15,33 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-public class JsonParser extends AsyncTask<String, Integer, Championship> {
+public class JsonParser extends AsyncTask<String, Integer, List<Championship>> {
+    private static final String FI_URL = "http://www.futebolinterior.com.br/gerados/placar_";
     private final Context mContext;
     private ProgressDialog mDialog;
 
     public JsonParser(Context context) {
         mContext = context;
+    }
+
+    @Override
+    protected List<Championship> doInBackground(String... urls) {
+        int count = urls.length;
+        Log.i("COUNT", "" + count);
+        List<Championship> championships = new ArrayList<Championship>();
+        for (int i = 0; i < count; i++) {
+            try {
+                URL url = new URL(urls[i]);
+                championships = readJsonStream(url.openStream());
+                publishProgress((int) ((i / (float) count) * 100));
+                if (isCancelled()) break;
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return championships;
     }
 
     @Override
@@ -31,35 +52,58 @@ public class JsonParser extends AsyncTask<String, Integer, Championship> {
     }
 
     @Override
+    protected void onPostExecute(List<Championship> championships) {
+        super.onPostExecute(championships);
+        mDialog.dismiss();
+        for (Championship c : championships) {
+            Log.i("CHAMPIONSHIP", c.toString());
+        }
+    }
+
+    @Override
     protected void onProgressUpdate(Integer... values) {
         super.onProgressUpdate(values);
     }
 
-    @Override
-    protected Championship doInBackground(String... urls) {
-        int count = urls.length;
-        Round[] rounds;
-        for (int i = 0; i < count; i++) {
-            try {
-                URL url = new URL(urls[i]);
-                rounds = readJsonStream(url.openStream());
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
+    public List<Championship> readJsonStream(InputStream in) throws IOException {
+        JsonReader reader = new JsonReader(new InputStreamReader(in, "UTF-8"));
+        List<Championship> championships = new ArrayList<Championship>();
+        try {
+            reader.beginArray();
+            while (reader.hasNext()) {
+                championships.add(getChampionship(reader));
+            }
+            reader.endArray();
+        } finally {
+            reader.close();
+        }
+        return championships;
+    }
+
+    private Championship getChampionship(JsonReader reader) throws IOException {
+        int id = 0;
+        String championshipName = "";
+        String roundId = "";
+        reader.beginObject();
+        while (reader.hasNext()) {
+            String name = reader.nextName();
+            if ("id".equals(name)) {
+                id = Integer.valueOf(reader.nextString());
+            } else if ("championship_name".equals(name)) {
+                championshipName = reader.nextString();
+            } else if ("round_id".equals(name)) {
+                roundId = reader.nextString();
+            } else {
+                reader.skipValue();
             }
         }
-//        Championship championship = new Championship();
-        return null;
+        reader.endObject();
+        URL url = new URL(FI_URL + roundId + ".json");
+        Round[] rounds = readChampionshipsGroups(url.openStream());
+        return new Championship(id, championshipName, roundId);
     }
 
-    @Override
-    protected void onPostExecute(Championship championship) {
-        super.onPostExecute(championship);
-        mDialog.dismiss();
-    }
-
-    public Round[] readJsonStream(InputStream in) throws IOException {
+    public Round[] readChampionshipsGroups(InputStream in) throws IOException {
         JsonReader reader = new JsonReader(new InputStreamReader(in, "UTF-8"));
         Log.i("JSON", "!");
         try {
@@ -78,8 +122,8 @@ public class JsonParser extends AsyncTask<String, Integer, Championship> {
             groups.add(readGroup(reader));
         }
         reader.endArray();
-
-        return (Round[]) groups.toArray();
+        Round[] rounds = new Round[groups.size()];
+        return rounds;
     }
 
     private Round readGroup(JsonReader reader) throws IOException {
@@ -187,7 +231,9 @@ public class JsonParser extends AsyncTask<String, Integer, Championship> {
             goals.add(value + name);
         }
         reader.endObject();
-        return (String[]) goals.toArray();
+        String[] goalsReturn = new String[goals.size()];
+        goals.toArray(goalsReturn);
+        return goalsReturn;
     }
 
     private Ranking[] readRankings(JsonReader reader) throws IOException {
@@ -203,7 +249,9 @@ public class JsonParser extends AsyncTask<String, Integer, Championship> {
             Log.i("JSONRANKING", ranking.toString());
         }
         reader.endObject();
-        return (Ranking[]) rankings.toArray();
+        Ranking[] rankingsReturn = new Ranking[rankings.size()];
+        rankings.toArray(rankingsReturn);
+        return rankingsReturn;
     }
 
     private Ranking readRanking(JsonReader reader, int position) throws IOException {

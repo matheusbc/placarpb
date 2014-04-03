@@ -55,6 +55,6 @@ public class Game {
     @Override
     public String toString() {
         return mStatus + " - " + mTime + " | " + mHomeTeam + " " + mHomeTeamGoals + "x" +
-                mVisitingTeamGoals + " " + mVisitingTeam;
+                mVisitingTeamGoals + " " + mVisitingTeam + " " + mObs;
     }
 }

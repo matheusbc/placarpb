@@ -1,16 +1,15 @@
 package com.example.placarpb.model;
 
-import java.util.Arrays;
-import java.util.List;
-
 public class Championship {
     private final int mId;
     private final String mName;
+    private final String mRoundId;
     private final Round[] mRounds;
 
-    public Championship(int id, String name, Round... rounds) {
+    public Championship(int id, String name, String roundId, Round... rounds) {
         this.mId = id;
         this.mName = name;
+        mRoundId = roundId;
         this.mRounds = rounds;
     }
 
@@ -22,7 +21,7 @@ public class Championship {
         return mName;
     }
 
-    public Round[] getmRounds() {
+    public Round[] getRounds() {
         return mRounds;
     }
 
