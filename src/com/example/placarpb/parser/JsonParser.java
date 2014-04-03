@@ -1,16 +1,11 @@
-package com.example.placarpb;
+package com.example.placarpb.parser;
 
-import android.app.Activity;
-import android.os.Bundle;
+import android.app.ProgressDialog;
+import android.content.Context;
+import android.os.AsyncTask;
 import android.util.JsonReader;
 import android.util.Log;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import com.example.placarpb.download.Downloader;
-import com.example.placarpb.model.Game;
-import com.example.placarpb.model.Ranking;
-import com.example.placarpb.model.Round;
-import com.example.placarpb.model.Team;
+import com.example.placarpb.model.*;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -20,43 +15,48 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends Activity {
-    /**
-     * Called when the activity is first created.
-     */
+public class JsonParser extends AsyncTask<String, Integer, Championship> {
+    private final Context mContext;
+    private ProgressDialog mDialog;
+
+    public JsonParser(Context context) {
+        mContext = context;
+    }
+
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.main);
-        LinearLayout layout = (LinearLayout) findViewById(R.id.layout);
-        ImageView team1 = new ImageView(this);
-        team1.setMinimumWidth(getResources().getDimensionPixelSize(R.dimen.team_shield));
-        team1.setMaxWidth(getResources().getDimensionPixelSize(R.dimen.team_shield));
-        team1.setMinimumHeight(getResources().getDimensionPixelSize(R.dimen.team_shield));
-        team1.setMaxHeight(getResources().getDimensionPixelSize(R.dimen.team_shield));
-        layout.addView(team1);
-        final ImageView team2 = (ImageView) findViewById(R.id.team2);
+    protected void onPreExecute() {
+        super.onPreExecute();
+        mDialog = ProgressDialog.show(mContext, "Loading...",
+                "Carregando resultados.", true);
+    }
 
-        new Downloader(null, team1, null, this).execute("http://www.futebolinterior.com" +
-                ".br/imagens/clubes/escudos_25/121.png");
-        new Team(124, "Teste", "124.png").loadShield(team2, this);
+    @Override
+    protected void onProgressUpdate(Integer... values) {
+        super.onProgressUpdate(values);
+    }
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    URL url = new URL("http://www.futebolinterior.com.br/gerados/placar_4708" +
-                            ".json");
-                    Log.i("JSON", "VAI!");
-                    readJsonStream(url.openStream());
-                } catch (MalformedURLException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+    @Override
+    protected Championship doInBackground(String... urls) {
+        int count = urls.length;
+        Round[] rounds;
+        for (int i = 0; i < count; i++) {
+            try {
+                URL url = new URL(urls[i]);
+                rounds = readJsonStream(url.openStream());
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-        }).start();
+        }
+//        Championship championship = new Championship();
+        return null;
+    }
 
+    @Override
+    protected void onPostExecute(Championship championship) {
+        super.onPostExecute(championship);
+        mDialog.dismiss();
     }
 
     public Round[] readJsonStream(InputStream in) throws IOException {
@@ -232,5 +232,4 @@ public class MainActivity extends Activity {
         reader.endObject();
         return new Ranking(legendColor, points, games, wins, goals, position);
     }
-
 }

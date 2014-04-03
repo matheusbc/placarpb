@@ -1,7 +1,7 @@
 package com.example.placarpb.model;
 
 public class Ranking implements Comparable<Ranking> {
-    private final String mTeamName;
+    private String mTeamName;
     private final String mLegendColor;
     private final int mPoints;
     private final int mGames;
@@ -9,9 +9,8 @@ public class Ranking implements Comparable<Ranking> {
     private final int mGoals;
     private final int mPosition;
 
-    public Ranking(String teamName, String legendColor, int points, int games, int wins,
+    public Ranking(String legendColor, int points, int games, int wins,
                    int goals, int position) {
-        this.mTeamName = teamName;
         this.mLegendColor = legendColor;
         this.mPoints = points;
         this.mGames = games;
@@ -46,6 +45,10 @@ public class Ranking implements Comparable<Ranking> {
 
     public int getPosition() {
         return mPosition;
+    }
+
+    public void setTeamName(String mTeamName) {
+        this.mTeamName = mTeamName;
     }
 
     @Override

@@ -6,14 +6,12 @@ import java.util.List;
 public class Championship {
     private final int mId;
     private final String mName;
-    private final List<Game> mGames;
-    private final Ranking[] mRanking;
+    private final Round[] mRounds;
 
-    public Championship(int id, String name, List<Game> games, Ranking... ranking) {
+    public Championship(int id, String name, Round... rounds) {
         this.mId = id;
         this.mName = name;
-        this.mGames = games;
-        this.mRanking = ranking;
+        this.mRounds = rounds;
     }
 
     public int getId() {
@@ -24,18 +22,12 @@ public class Championship {
         return mName;
     }
 
-    public List<Game> getGames() {
-        return mGames;
-    }
-
-    public Ranking[] getRanking() {
-        Arrays.sort(mRanking);
-        return mRanking;
+    public Round[] getmRounds() {
+        return mRounds;
     }
 
     @Override
     public String toString() {
-        return mName + " - Games: " + mGames.toString() + " - Ranking: "
-                + Arrays.toString(mRanking);
+        return mName;
     }
 }
