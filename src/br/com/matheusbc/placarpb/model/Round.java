@@ -1,4 +1,4 @@
-package com.example.placarpb.model;
+package br.com.matheusbc.placarpb.model;
 
 import java.util.Arrays;
 import java.util.List;

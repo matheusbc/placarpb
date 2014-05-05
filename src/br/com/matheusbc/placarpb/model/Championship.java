@@ -1,4 +1,4 @@
-package com.example.placarpb.model;
+package br.com.matheusbc.placarpb.model;
 
 public class Championship {
     private final int mId;

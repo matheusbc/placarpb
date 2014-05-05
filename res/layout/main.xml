@@ -3,19 +3,59 @@
               android:orientation="vertical"
               android:layout_width="fill_parent"
               android:layout_height="fill_parent"
-              android:id="@+id/layout">
-    <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="Hello World, MainActivity"
-            />
-    <ImageView
-            android:layout_width="40dip"
-            android:layout_height="40dip"
-            android:id="@+id/team1"/>
-    <ImageView
-            android:layout_width="40dip"
-            android:layout_height="40dip"
-            android:id="@+id/team2"/>
+              android:id="@+id/mainLayout"
+              android:weightSum="1"
+              android:background="@android:color/darker_gray">
+
+    <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="142dp"
+            android:weightSum="1"
+            android:background="@drawable/game_info_bg">
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="06/04 - 16h00 - Agendado"
+                android:id="@+id/textView"
+                android:layout_gravity="center_horizontal"/>
+        <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_weight="0.20"
+                android:gravity="center_horizontal">
+            <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/imageView"
+                    android:src="@drawable/ic_launcher"
+                    android:layout_gravity="center_vertical"/>
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Treze"
+                    android:id="@+id/textView2"
+                    android:layout_gravity="center_vertical"/>
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="2 x 0"
+                    android:id="@+id/textView3"
+                    android:layout_gravity="center_vertical"/>
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Campinense"
+                    android:id="@+id/textView4"
+                    android:layout_gravity="center_vertical"/>
+            <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/imageView2"
+                    android:src="@drawable/ic_launcher"
+                    android:layout_gravity="center_vertical"/>
+        </LinearLayout>
+    </LinearLayout>
 </LinearLayout>
 

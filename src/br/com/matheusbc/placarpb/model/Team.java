@@ -1,8 +1,8 @@
-package com.example.placarpb.model;
+package br.com.matheusbc.placarpb.model;
 
 import android.content.Context;
 import android.widget.ImageView;
-import com.example.placarpb.download.Downloader;
+import br.com.matheusbc.placarpb.download.Downloader;
 
 public class Team {
     private final int mId;

@@ -1,4 +1,4 @@
-    package com.example.placarpb.download;
+    package br.com.matheusbc.placarpb.download;
 
     import android.content.Context;
     import android.graphics.Bitmap;
@@ -6,9 +6,15 @@
     import android.os.AsyncTask;
     import android.os.Environment;
     import android.util.Log;
-    import android.widget.*;
+    import android.widget.ImageView;
+    import android.widget.ProgressBar;
+    import android.widget.TextView;
+    import android.widget.Toast;
 
-    import java.io.*;
+    import java.io.File;
+    import java.io.FileOutputStream;
+    import java.io.IOException;
+    import java.io.InputStream;
     import java.net.HttpURLConnection;
     import java.net.URL;
 

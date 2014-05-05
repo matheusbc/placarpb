@@ -1,4 +1,4 @@
-package com.example.placarpb.model;
+package br.com.matheusbc.placarpb.model;
 
 public class Ranking implements Comparable<Ranking> {
     private String mTeamName;

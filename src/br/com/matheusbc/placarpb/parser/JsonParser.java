@@ -1,11 +1,11 @@
-package com.example.placarpb.parser;
+package br.com.matheusbc.placarpb.parser;
 
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.JsonReader;
 import android.util.Log;
-import com.example.placarpb.model.*;
+import br.com.matheusbc.placarpb.model.*;
 
 import java.io.IOException;
 import java.io.InputStream;
